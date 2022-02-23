@@ -1,4 +1,5 @@
-# Write your code below game_hash
+require "pry"
+
 def game_hash
   {
     home: {
@@ -14,7 +15,7 @@ def game_hash
           assists: 12,
           steals: 3,
           blocks: 1,
-          slam_dunks: 1
+          slam_dunks: 1,
         },
         {
           player_name: "Reggie Evans",
@@ -25,7 +26,7 @@ def game_hash
           assists: 12,
           steals: 12,
           blocks: 12,
-          slam_dunks: 7
+          slam_dunks: 7,
         },
         {
           player_name: "Brook Lopez",
@@ -36,7 +37,7 @@ def game_hash
           assists: 10,
           steals: 3,
           blocks: 1,
-          slam_dunks: 15
+          slam_dunks: 15,
         },
         {
           player_name: "Mason Plumlee",
@@ -47,7 +48,7 @@ def game_hash
           assists: 6,
           steals: 3,
           blocks: 8,
-          slam_dunks: 5
+          slam_dunks: 5,
         },
         {
           player_name: "Jason Terry",
@@ -58,9 +59,9 @@ def game_hash
           assists: 2,
           steals: 4,
           blocks: 11,
-          slam_dunks: 1
-        }
-      ]
+          slam_dunks: 1,
+        },
+      ],
     },
     away: {
       team_name: "Charlotte Hornets",
@@ -75,7 +76,7 @@ def game_hash
           assists: 1,
           steals: 2,
           blocks: 7,
-          slam_dunks: 2
+          slam_dunks: 2,
         },
         {
           player_name: "Bismack Biyombo",
@@ -86,7 +87,7 @@ def game_hash
           assists: 7,
           steals: 22,
           blocks: 15,
-          slam_dunks: 10
+          slam_dunks: 10,
         },
         {
           player_name: "DeSagna Diop",
@@ -97,7 +98,7 @@ def game_hash
           assists: 12,
           steals: 4,
           blocks: 5,
-          slam_dunks: 5
+          slam_dunks: 5,
         },
         {
           player_name: "Ben Gordon",
@@ -108,7 +109,7 @@ def game_hash
           assists: 2,
           steals: 1,
           blocks: 1,
-          slam_dunks: 0
+          slam_dunks: 0,
         },
         {
           player_name: "Kemba Walker",
@@ -119,11 +120,70 @@ def game_hash
           assists: 12,
           steals: 7,
           blocks: 5,
-          slam_dunks: 12
-        }
-      ]
+          slam_dunks: 12,
+        },
+      ],
+    },
+  }
+end
+
+def num_points_scored(name)
+  game_hash.map { |location, team_data|
+    team_data[:players].filter { |player|
+      if player[:player_name] == name
+        return player[:points]
+      end
     }
   }
 end
 
-# Write code here
+def shoe_size(name)
+  game_hash.map { |location, team_data|
+    team_data[:players].filter { |player|
+      if player[:player_name] == name
+        return player[:shoe]
+      end
+    }
+  }
+end
+
+def team_colors(name)
+  game_hash.filter { |location, team_data|
+    if team_data[:team_name] == name
+      return team_data[:colors]
+    end
+  }
+end
+
+def team_names
+  team_array = game_hash.map { |location, team_data|
+    team_data[:team_name]
+  }
+  team_array
+end
+
+def player_numbers(name)
+  team_array = game_hash.filter { |location, team_data|
+    if team_data[:team_name] == name
+      return team_data[:players].map { |player| player[:number] }
+    end
+  }
+  puts team_array
+end
+
+def player_stats(name)
+  game_hash.each { |location, team_data|
+    team_data[:players].filter { |player|
+      if player[:player_name] == name
+        return player
+      end
+    }
+  }
+end
+
+def big_shoe_rebounds
+  game_hash.each { |location, team_data|
+    return team_data[:players].max_by { |player| player[:shoe] }[:rebounds]
+  }
+end
+
